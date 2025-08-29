@@ -1,9 +1,14 @@
 import express from "express";
 import bodyParser from "body-parser";
-import path from "path"
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, "public")));
 
 const FULL_NAME = "utkarsh_vishnoi";
 const DOB = "29062004";
@@ -57,8 +62,8 @@ function processData(data) {
 }
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(import.meta.dirname, "index.html"))
-})
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
 app.post("/bfhl", (req, res) => {
   try {
@@ -77,7 +82,7 @@ app.post("/bfhl", (req, res) => {
 
 app.use((req, res) => {
   res.status(404).send("API endpoint not found");
-})
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
