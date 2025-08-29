@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import path from "path"
 
 const app = express();
 app.use(bodyParser.json());
@@ -54,6 +55,10 @@ function processData(data) {
     concat_string: concat,
   };
 }
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(import.meta.dirname, "index.html"))
+})
 
 app.post("/bfhl", (req, res) => {
   try {
